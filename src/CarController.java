@@ -80,4 +80,60 @@ public class CarController {
             car.gas(gas);
         }
     }
+    void brake(int amount) {
+        double brake = ((double) amount) / 100;
+        for (Vehicle car : cars
+        ) {
+            car.brake(brake);
+        }
+    }
+    void turboOn(){
+        //Sätt på turbon på Saaben
+        for (Vehicle saab : cars) {
+            if (saab.getClass() == Saab95.class){
+                ((Saab95) saab).setTurboOn();
+            }
+        }
+    }
+    void turboOff(){
+        //Stäng av turbon på Saaben
+        for (Vehicle saab : cars) {
+            if (saab.getClass() == Saab95.class){
+                ((Saab95) saab).setTurboOff();
+            }
+        }
+    }
+    void liftBed(){
+        //Res flaket
+        for (Vehicle car : cars) {
+            if (car.getClass()==Scania.class){
+                ((Scania) car).raiseRamp(70);
+                System.out.println(((Scania) car).getTruckBedIncline());
+            }
+        }
+    }
+    void lowerBed(){
+        //Fäll flaket
+        for (Vehicle car : cars) {
+            if (car.getClass()==Scania.class){
+                ((Scania) car).lowerRamp(70);
+
+                System.out.println(((Scania) car).getTruckBedIncline());
+            }
+        }
+    }
+    void start(){
+        //Starta alla engines
+        for (Vehicle car : cars
+        ) {
+            car.startEngine();
+        }
+    }
+    void stop(){
+        //Stoppa alla engines
+        for (Vehicle car : cars
+        ) {
+            car.stopEngine();
+        }
+    }
 }
