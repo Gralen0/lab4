@@ -3,11 +3,11 @@ import java.awt.image.BufferedImage;
 
 public class carDraw{
 
-    public String typ;
+    public String name;
     public BufferedImage image;
     public Point point;
-    public carDraw(String typ, BufferedImage image, Point p){
-        this.typ = typ;
+    public carDraw(String name, BufferedImage image, Point p){
+        this.name = name;
         this.image = image;
         this.point = p;
     }

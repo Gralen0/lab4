@@ -22,12 +22,13 @@ public class DrawPanel extends JPanel{
 
     // TODO: Make this genereal for all cars
     void moveit(Vehicle car, int x, int y){
-
-            //fix this lol
-            int index = carsToDraw.indexOf(car.getModelName());
-            carsToDraw.get(index).point.x=x;
-            carsToDraw.get(index).point.y=y;
-
+        String name=car.getRegistrationNr();
+        for (carDraw carToCheckName: carsToDraw){
+            if (carToCheckName.name.equals(name)){
+                carToCheckName.point.x=x;
+                carToCheckName.point.y=y;
+            }
+        }
     }
 
     // Initializes the panel and reads the images

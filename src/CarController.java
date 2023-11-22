@@ -34,6 +34,7 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.cars.add(new Volvo240("Yo"));
+        cc.cars.getLast().moveRight();
         cc.cars.add(new Saab95("Tja"));
         cc.cars.getLast().getPosition().move(0,200);
         cc.cars.getLast().moveRight();
@@ -72,7 +73,10 @@ public class CarController {
                     car.moveRight();
                     car.startEngine();
                 }
+                else {
+
                 car.move();
+                }
                 frame.drawPanel.moveit(car,x, y);
                 // repaint() calls the paintComponent method of the panel
 
