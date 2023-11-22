@@ -13,7 +13,8 @@ import javax.swing.*;
 public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
-    BufferedImage volvoImage;
+    //BufferedImage volvoImage;
+
     // To keep track of a singel cars position
     private ArrayList<carDraw> carsToDraw;
 
@@ -34,6 +35,7 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
+
         // Print an error message in case file is not found with a try/catch block
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
@@ -64,6 +66,12 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
+        for (carDraw car : carsToDraw){
+
+            g.drawImage(car.image, car.point.x, car.point.y, null); // see javadoc for more info on the parameters
+        }
     }
 }
+
+
+
