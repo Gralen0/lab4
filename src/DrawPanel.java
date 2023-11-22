@@ -46,9 +46,9 @@ public class DrawPanel extends JPanel{
             // if you are starting in IntelliJ.
 
             carsToDraw= new ArrayList<>();
-            carsToDraw.add(new carDraw( "Volvo240",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")),new Point()));
-            carsToDraw.add(new carDraw("Saab95",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")),new Point()));
-            carsToDraw.add(new carDraw("Scania",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")),new Point()));
+            carsToDraw.add(new carDraw( "Yo",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")),new Point()));
+            carsToDraw.add(new carDraw("Tja",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")),new Point()));
+            carsToDraw.add(new carDraw("Hej",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")),new Point()));
 
 
 
@@ -67,7 +67,6 @@ public class DrawPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (carDraw car : carsToDraw){
-
             g.drawImage(car.image, car.point.x, car.point.y, null); // see javadoc for more info on the parameters
         }
     }

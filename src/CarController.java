@@ -35,9 +35,11 @@ public class CarController {
 
         cc.cars.add(new Volvo240("Yo"));
         cc.cars.add(new Saab95("Tja"));
-        cc.cars.getLast().getPosition().move(100,0);
+        cc.cars.getLast().getPosition().move(0,200);
+        cc.cars.getLast().moveRight();
         cc.cars.add(new Scania("Hej"));
-        cc.cars.getLast().getPosition().move(200,0);
+        cc.cars.getLast().getPosition().move(0,400);
+        cc.cars.getLast().moveRight();
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -55,13 +57,20 @@ public class CarController {
 
                 int x = (int) Math.round(car.getPosition().getX());
                 int y = (int) Math.round(car.getPosition().getY());
-                if (y > 500){
+                if (x+(int)Math.round(car.getCurrentSpeed()) > 700 && car.getDirection().equals("East")){
+                    car.getPosition().move(700,(int)car.getPosition().getY());
+                    car.stopEngine();
                     car.moveRight();
                     car.moveRight();
+                    car.startEngine();
                 }
-                else if (y < 0){
+
+                else if (x-(int)Math.round(car.getCurrentSpeed()) < 0 && car.getDirection().equals("West")){
+                    car.getPosition().move(0,(int)car.getPosition().getY());
+                    car.stopEngine();
                     car.moveRight();
                     car.moveRight();
+                    car.startEngine();
                 }
                 car.move();
                 frame.drawPanel.moveit(car,x, y);

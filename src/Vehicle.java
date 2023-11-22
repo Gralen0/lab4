@@ -79,11 +79,14 @@ public abstract class Vehicle implements Movable{
     private void decrementSpeed(double amount){ setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount,0));}
 
     public void gas(double amount){
-        if (0.0<=amount & amount<=1.0 ){incrementSpeed(amount);}
+        if (0.0<=amount & amount<=1.0 ){
+            if (getCurrentSpeed() > 0){
+                incrementSpeed(amount);
+            }}
     }
 
     public void brake(double amount){
-        if (0 <=amount & amount <= 1) {decrementSpeed(amount);}
+        if (0.0 <=amount & amount <= 1.0) {decrementSpeed(amount);}
     }
 
     @Override
