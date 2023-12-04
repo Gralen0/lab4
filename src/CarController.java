@@ -101,8 +101,7 @@ public class CarController {
         cc.cars.getLast().getPosition().move(0,400);
         cc.cars.getLast().moveRight();*/
 
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+
 
         // Start the timer
         cc.timer.start();
@@ -136,13 +135,14 @@ public class CarController {
 
                 car.move();
                 }
-                frame.drawPanel.moveit(car,x, y);
+                frame.moveit(car,x, y);
                 // repaint() calls the paintComponent method of the panel
 
-                 frame.drawPanel.repaint();
+                 frame.repaint(car,x ,y);
             }
         }
     }
+
 
 
 }
