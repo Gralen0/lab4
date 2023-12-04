@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -23,6 +26,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC
     // Start a new view and send a reference of self
     CarView frame;
+    int frameMinEdgeX = 0;
 
 
 
@@ -116,16 +120,16 @@ public class CarController {
 
                 int x = (int) Math.round(car.getPosition().getX());
                 int y = (int) Math.round(car.getPosition().getY());
-                if (x+(int)Math.round(car.getCurrentSpeed()) > 700 && car.getDirection().equals("East")){
-                    car.getPosition().move(700,(int)car.getPosition().getY());
+                if (x+(int)Math.round(car.getCurrentSpeed()) > frame.getFrameEdgeX() && car.getDirection().equals("East")){
+                    car.getPosition().move(frame.getFrameEdgeX(),(int)car.getPosition().getY());
                     car.stopEngine();
                     car.moveRight();
                     car.moveRight();
                     car.startEngine();
                 }
 
-                else if (x-(int)Math.round(car.getCurrentSpeed()) < 0 && car.getDirection().equals("West")){
-                    car.getPosition().move(0,(int)car.getPosition().getY());
+                else if (x-(int)Math.round(car.getCurrentSpeed()) < frameMinEdgeX && car.getDirection().equals("West")){
+                    car.getPosition().move(frameMinEdgeX,(int)car.getPosition().getY());
                     car.stopEngine();
                     car.moveRight();
                     car.moveRight();

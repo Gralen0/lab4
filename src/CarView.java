@@ -17,7 +17,6 @@ import java.util.Map;
  * It initializes with being center on the screen and attaching it's controller in it's state.
  * It communicates with the Controller by calling methods of it when an action fires of in
  * each of it's components.
- * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
 public class CarView extends JFrame{
@@ -58,8 +57,22 @@ public class CarView extends JFrame{
         initComponents(framename);
     }
 
+    //TODO:Get buttons
+
+
+
+
+    //TODO: Fixa så att imageSize finns tillgänglig i CarView
+    public int getFrameEdgeX(){
+        int edgeX = X-imageSize;
+        return edgeX;
+    }
+    public int getFrameEdgeY(){
+        int edgeY = Y-imageSize;
+        return edgeY;
+    }
+
     // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(String title) {
 
         this.setTitle(title);

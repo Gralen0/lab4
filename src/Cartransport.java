@@ -5,6 +5,8 @@ public class Cartransport extends Truck{
 
     private final int carAmount;
     public Load<Car> loadHelper;
+    private int loadDistanceX;
+    private int loadDistanceY;
 
     public Cartransport(String name, int carAmount){
         this.carAmount = carAmount;
@@ -14,13 +16,15 @@ public class Cartransport extends Truck{
         setModelName("Transporter");
         stopEngine();
         setRegistrationNr(name);
+        loadDistanceX = 1;
+        loadDistanceY = 1;
         loadHelper = new Load<>(carAmount);
     }
 
     public boolean closeBy(Car car) {
         //Kontrollera att bilen som ska lastas är rimligt nära biltransporten
-        return ((car.getPosition().getX() < this.getPosition().getX() + 1 && car.getPosition().getX() > this.getPosition().getX() - 1) &
-            (car.getPosition().getY() < this.getPosition().getY() + 1 && car.getPosition().getY() > this.getPosition().getY() - 1));
+        return ((car.getPosition().getX() < this.getPosition().getX() + loadDistanceX && car.getPosition().getX() > this.getPosition().getX() - loadDistanceX) &
+            (car.getPosition().getY() < this.getPosition().getY() + loadDistanceY && car.getPosition().getY() > this.getPosition().getY() - loadDistanceY));
     }
 
     public void load(Car car){
