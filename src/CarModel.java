@@ -15,10 +15,10 @@ public class CarModel {
     }
 
     public void moveit(Vehicle car, int x, int y){
-        String name=car.getRegistrationNr();
-        for (Vehicle vehicle: cars){
-            vehicle.getPosition().move(x,y);
-            }
+        //String name=car.getRegistrationNr();
+
+            car.getPosition().move(x,y);
+
         }
 
 

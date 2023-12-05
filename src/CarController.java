@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.Position;
 import java.awt.*;
+import java.util.HashMap;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -26,15 +29,25 @@ public class CarController {
     // The frame that represents this instance View of the MVC
     // Start a new view and send a reference of self
     CarView frame;
+    //DrawPanel drawPanelComposition;
     int frameMinEdgeX = 0;
-
+    HashMap<String, Point> carPositions;
 
 
     public CarController(){
         this.frame = new CarView("CarSim 1.0");
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
+        carPositions = new HashMap<>();
+        //TODO: Fråga om Vehicle som typ
+        for (Vehicle car : model.getCars()){
+
+            carPositions.put(car.getModelName(), car.getPosition());
+
+        }
+
+        //Sätter Frame storleken i DrawPanel
+        //drawPanelComposition.setFrameSizeX(frame.getFrameSizeX());
+        frame.drawPanel.setFrameSizeX(frame.getFrameSizeX());
 
         frame.gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -96,20 +109,11 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        /*cc.cars.add(new Volvo240("Yo"));
-        cc.cars.getLast().moveRight();
-        cc.cars.add(new Saab95("Tja"));
-        cc.cars.getLast().getPosition().move(0,200);
-        cc.cars.getLast().moveRight();
-        cc.cars.add(new Scania("Hej"));
-        cc.cars.getLast().getPosition().move(0,400);
-        cc.cars.getLast().moveRight();*/
-
-
 
         // Start the timer
         cc.timer.start();
     }
+
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -120,8 +124,8 @@ public class CarController {
 
                 int x = (int) Math.round(car.getPosition().getX());
                 int y = (int) Math.round(car.getPosition().getY());
-                if (x+(int)Math.round(car.getCurrentSpeed()) > frame.getFrameEdgeX() && car.getDirection().equals("East")){
-                    car.getPosition().move(frame.getFrameEdgeX(),(int)car.getPosition().getY());
+                if (x+(int)Math.round(car.getCurrentSpeed()) > frame.drawPanel.getFrameEdgeX() && car.getDirection().equals("East")){
+                    car.getPosition().move(frame.drawPanel.getFrameEdgeX(),(int)car.getPosition().getY());
                     car.stopEngine();
                     car.moveRight();
                     car.moveRight();
@@ -136,13 +140,17 @@ public class CarController {
                     car.startEngine();
                 }
                 else {
-
-                car.move();
+                    model.moveit(car,x, y);
                 }
-                frame.moveit(car,x, y);
+
                 // repaint() calls the paintComponent method of the panel
 
-                 frame.repaint(car,x ,y);
+                //Uppdatera Hashmap sen skicka
+                carPositions.put(car.getModelName(),car.getPosition());
+                frame.drawPanel.setPositionHashMap(carPositions);
+
+
+                frame.drawPanel.repaint();
             }
         }
     }

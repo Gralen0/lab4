@@ -137,50 +137,8 @@ public class CarView extends JFrame{
 
     }
 
-    public void repaint(String carName, int x ,int y){
-
-    }
-
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        for (carDraw car : carsToDraw){
-            g.drawImage(car.image, car.point.x, car.point.y, null); // see javadoc for more info on the parameters
-        }
-    }
-    public DrawPanel(int x, int y) {
-        this.setDoubleBuffered(true);
-        this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.green);
-
-        // Print an error message in case file is not found with a try/catch block
-        try {
-            // You can remove the "pics" part if running outside of IntelliJ and
-            // everything is in the same main folder.
-            // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
-
-            // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
-            // if you are starting in IntelliJ
-            //ArrayList<BufferedImage> carsDraw = new ArrayList<>();
-            carsDraw.add(ImageIO.read(CarView.class.getResourceAsStream("pics/Volvo240.jpg")));
-            carsDraw.add(ImageIO.read(CarView.class.getResourceAsStream("pics/Saab95.jpg")));
-            carsDraw.add(ImageIO.read(CarView.class.getResourceAsStream("pics/Scania.jpg")));
-
-            /*carsToDraw= new ArrayList<>();
-            carsToDraw.add(new carDraw( "Yo", ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")),new Point()));
-            carsToDraw.add(new carDraw("Tja",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")),new Point()));
-            carsToDraw.add(new carDraw("Hej",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")),new Point()));*/
 
 
 
-
-
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-
-    }
 
 }
