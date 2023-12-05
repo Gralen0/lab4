@@ -24,6 +24,10 @@ public class CarView extends JFrame{
     private static final int Y = 800;
 
 
+    public int getFrameSizeX(){
+        return X;
+    }
+
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
     JPanel controlPanel = new JPanel();
@@ -42,14 +46,6 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
-
-
-    // Create a HashMap
-    private Map<Vehicle, BufferedImage> CarImages = new HashMap<>();
-
-    CarImages.put(Volvo240, ImageIO.read(.class.getResourceAsStream("pics/Volvo240.jpg");
-
-    private ArrayList<BufferedImage> carsDraw = new ArrayList<>();
 
 
     // Constructor
