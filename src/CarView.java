@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,20 +54,13 @@ public class CarView extends JFrame{
         initComponents(framename);
     }
 
-    //TODO:Get buttons
 
 
 
 
-    //TODO: Fixa så att imageSize finns tillgänglig i CarView
-    public int getFrameEdgeX(){
-        int edgeX = X-imageSize;
-        return edgeX;
-    }
-    public int getFrameEdgeY(){
-        int edgeY = Y-imageSize;
-        return edgeY;
-    }
+
+
+
 
     // Sets everything in place and fits everything
     private void initComponents(String title) {

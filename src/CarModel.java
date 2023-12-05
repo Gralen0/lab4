@@ -9,9 +9,14 @@ public class CarModel {
         createCarList();
     }
     private void createCarList(){
-        cars.add(VehicleFactory.createVolvo240("Hej"));
-        cars.add(VehicleFactory.createSaab95("Yo"));
-        cars.add(VehicleFactory.createScania("Tjo"));
+        cars.add(VehicleFactory.createVolvo240("VVO240"));
+        cars.getLast().moveRight();
+        cars.add(VehicleFactory.createSaab95("SAB095"));
+        cars.getLast().moveRight();
+        cars.getLast().getPosition().move(0,200);
+        cars.add(VehicleFactory.createScania("SCA180"));
+        cars.getLast().moveRight();
+        cars.getLast().getPosition().move(0,400);
     }
 
     public void moveit(Vehicle car, int x, int y){
