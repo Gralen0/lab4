@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel implements Observer{
 
-    private ArrayList<carDraw> carsToDraw;
+    private ArrayList<carDraw> carsToDraw = new ArrayList<>();
     private int frameBoundaryX;
     private int imageWidth = 100;
 

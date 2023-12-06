@@ -17,16 +17,15 @@ public class CarModel {
     // each step between delays.
     public Timer timer;
 
-    public TimerListener timerListener;
+    public TimerListener timerListener = new TimerListener();
 
     private int frameBoundaryX;
 
 
     protected CarModel(int frameBoundaryX) {
         this.frameBoundaryX = frameBoundaryX;
-        createCarList();
-        this.timerListener = new TimerListener();
         timer = new Timer(delay, timerListener);
+        //createCarList();
     }
 
     private void createCarList() {
@@ -111,7 +110,7 @@ public class CarModel {
     void addCar() {
         if (cars.size() < 10) {
             if (cars.isEmpty()) {
-                cars.add(VehicleFactory.createSaab95("SAB" + Math.random()));
+                cars.add(VehicleFactory.createVolvo240("VOLVO" + Math.random()));
             }
             else if (!cars.isEmpty()){
                 int height = (int) cars.getLast().getPosition().getY();
@@ -146,11 +145,6 @@ public class CarModel {
 
         public void addObserver(Observer observer) {
             observers.add(observer);
-        }
-
-        //TODO: remove??
-        public void removeObserver(Observer observer) {
-            observers.remove(observer);
         }
 
         private void notifyObservers() {

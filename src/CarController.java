@@ -92,6 +92,7 @@ public class CarController {
 
             }
         });
+        model.timer.start();
 
     }
 
