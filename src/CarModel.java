@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class CarModel {
@@ -6,8 +9,24 @@ public class CarModel {
     public ArrayList<Vehicle> getCars() {
         return cars;
     }
-    protected CarModel(){
+
+    // The delay (ms) corresponds to 20 updates a sec (hz)
+    private final int delay = 50;
+    // The timer is started with an listener (see below) that executes the statements
+    // each step between delays.
+    public Timer timer;
+
+    public TimerListener timerListener;
+
+    private int frameBoundaryX;
+
+
+    //TODO Fråga: frameBoundaryX som en parameter i konstruktorn?
+    protected CarModel(int frameBoundaryX){
+        this.frameBoundaryX=frameBoundaryX;
         createCarList();
+        this.timerListener = new TimerListener();
+        timer = new Timer(delay, timerListener);
     }
     private void createCarList(){
         cars.add(VehicleFactory.createVolvo240("VVO240"));
@@ -86,35 +105,66 @@ public class CarModel {
         }
     }
 
-    void stopEngine(Vehicle car){
-        car.stopEngine();
-    }
-    void startEngine(Vehicle car){
-        car.startEngine();
+
+    public class TimerListener implements ActionListener {
+
+
+        public ArrayList<Observer> observers = new ArrayList<>();
+
+        public void addObserver(Observer observer) {
+            observers.add(observer);
+        }
+
+        public void removeObserver(Observer observer) {
+            observers.remove(observer);
+        }
+
+        private void notifyObservers() {
+            for (Observer observer : observers) {
+                observer.update();
+
+            }
+        }
+        private void moveItNotify(String carName, int x, int y){
+            for (Observer observer : observers) {
+                observer.moveIt(carName, x, y);
+            }
+
+        }
+
+        int frameMinBoundaryX = 0;
+        public void actionPerformed(ActionEvent e) {
+            for (Vehicle car : cars) {
+                int x = (int) Math.round(car.getPosition().getX());
+                int y = (int) Math.round(car.getPosition().getY());
+                if (x+(int)Math.round(car.getCurrentSpeed()) > frameBoundaryX && car.getDirection().equals("East")){
+                    car.getPosition().move(frameBoundaryX,(int)car.getPosition().getY());
+                    car.stopEngine();
+                    car.moveRight();
+                    car.moveRight();
+                    car.startEngine();
+                }
+
+                else if (x-(int)Math.round(car.getCurrentSpeed()) < frameMinBoundaryX && car.getDirection().equals("West")){
+                    car.getPosition().move(frameMinBoundaryX,(int)car.getPosition().getY());
+                    car.stopEngine();
+                    car.moveRight();
+                    car.moveRight();
+                    car.startEngine();
+                }
+                else {
+                    car.move();
+                }
+                //TODO Gör notifier?
+                //frame.drawPanel.moveit(car.getRegistrationNr(),x, y);
+                moveItNotify(car.getRegistrationNr(),x, y);
+
+                // repaint() calls the paintComponent method of the panel
+
+                //frame.drawPanel.repaint();
+                notifyObservers();
+            }
+        }
     }
 
-    void moveRight(Vehicle car){
-        car.moveRight();
-    }
-
-    public Point getPosition(Vehicle car){
-        return car.getPosition();
-    }
-
-    public double getCurrentSpeed(Vehicle car){
-        return car.getCurrentSpeed();
-    }
-
-    public String getDirection(Vehicle car){
-        return  car.getDirection();
-
-    }
-
-    public String getRegistrationNr(Vehicle car){
-        return car.getRegistrationNr();
-    }
-
-    void move(Vehicle car){
-        car.move();
-    }
 }
