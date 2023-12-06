@@ -85,8 +85,6 @@ public class CarModel {
         for (Vehicle car : cars) {
             if (car.getClass() == Scania.class) {
                 ((Scania) car).lowerRamp(70);
-
-                System.out.println(((Scania) car).getTruckBedIncline());
             }
         }
     }
