@@ -104,7 +104,28 @@ public class CarModel {
             car.stopEngine();
         }
     }
+    void addCar(){
+        if (cars.size() < 10) {
+            cars.add(VehicleFactory.createVolvo240("hej"));
+            timerListener.notifyCarAdd();
+        }
 
+
+        //TODO: Add Car
+        //"Add car" ska antingen generera en slumpmässig bil eller en given bil.
+        //om det finns 10 bilar ska "Add car" inte ha någon effekt.
+    }
+
+    void removeCar(){
+        if (!cars.isEmpty()) {
+            cars.removeLast();
+            timerListener.notifyCarRemove();
+        }
+
+
+        //TODO: Remove Car uppdatera bilden
+
+    }
 
     public class TimerListener implements ActionListener {
 

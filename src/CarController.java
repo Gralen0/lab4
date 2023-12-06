@@ -81,6 +81,20 @@ public class CarController {
                 model.stopAll();
             }
         });
+        frame.addCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addCar();
+
+            }
+        });
+        frame.removeCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.removeCar();
+
+            }
+        });
 
         // Start the timer
         model.timer.start();

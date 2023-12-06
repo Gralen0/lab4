@@ -76,4 +76,14 @@ public class DrawPanel extends JPanel implements Observer{
         this.repaint();
     }
 
+    @Override
+    public void notifyCarAdd(){
+        //TODO Add car with correct picture and name
+    }
+
+    @Override
+    public void notifyCarRemove(){
+        carsToDraw.removeLast();
+        //TODO Remove car
+    }
 }
