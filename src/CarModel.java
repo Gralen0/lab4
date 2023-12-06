@@ -191,8 +191,9 @@ public class CarModel {
                 }
                 moveItNotify(car.getRegistrationNr(),x, y);
 
-                notifyObservers();
+
             }
+            notifyObservers();
         }
     }
 
