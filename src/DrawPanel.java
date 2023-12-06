@@ -10,10 +10,7 @@ import javax.swing.*;
 
 // This panel represent the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel{
-
-    // Just a single image, TODO: Generalize
-    //BufferedImage volvoImage;
+public class DrawPanel extends JPanel implements Observer{
 
     // To keep track of a singel cars position
     private ArrayList<carDraw> carsToDraw;
@@ -21,7 +18,8 @@ public class DrawPanel extends JPanel{
 
 
     // TODO: Make this genereal for all cars
-    void moveit(String carName, int x, int y){
+    @Override
+    public void moveIt(String carName, int x, int y){
         for (carDraw carToCheckName: carsToDraw){
             if (carToCheckName.name.equals(carName)){
                 carToCheckName.point.x=x;
@@ -64,6 +62,8 @@ public class DrawPanel extends JPanel{
         return frameBoundaryX;
     }
 
+
+
     // This method is called each time the panel updates/refreshes/repaints itself
     @Override
     protected void paintComponent(Graphics g) {
@@ -72,4 +72,10 @@ public class DrawPanel extends JPanel{
             g.drawImage(car.image, car.point.x, car.point.y, null); // see javadoc for more info on the parameters
         }
     }
+
+    @Override
+    public void update(){
+        this.repaint();
+    }
+
 }
