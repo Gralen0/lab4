@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class CarModel {
     private ArrayList<Vehicle> cars = new ArrayList<>();
+
     public ArrayList<Vehicle> getCars() {
         return cars;
     }
@@ -22,21 +23,25 @@ public class CarModel {
 
 
     //TODO Fråga: frameBoundaryX som en parameter i konstruktorn?
-    protected CarModel(int frameBoundaryX){
-        this.frameBoundaryX=frameBoundaryX;
+    protected CarModel(int frameBoundaryX) {
+        this.frameBoundaryX = frameBoundaryX;
         createCarList();
         this.timerListener = new TimerListener();
         timer = new Timer(delay, timerListener);
     }
-    private void createCarList(){
+
+    private void createCarList() {
+        /*addCar();
+        addCar();
+        addCar();*/
         cars.add(VehicleFactory.createVolvo240("VVO240"));
         cars.getLast().moveRight();
         cars.add(VehicleFactory.createSaab95("SAB095"));
         cars.getLast().moveRight();
-        cars.getLast().getPosition().move(0,200);
+        cars.getLast().getPosition().move(0, 60);
         cars.add(VehicleFactory.createScania("SCA180"));
         cars.getLast().moveRight();
-        cars.getLast().getPosition().move(0,400);
+        cars.getLast().getPosition().move(0, 120);
     }
 
 
@@ -48,6 +53,7 @@ public class CarModel {
             car.gas(gas);
         }
     }
+
     void brake(int amount) {
         double brake = ((double) amount) / 100;
         for (Vehicle car : cars
@@ -55,76 +61,91 @@ public class CarModel {
             car.brake(brake);
         }
     }
-    void turboOn(){
+
+    void turboOn() {
         //Sätt på turbon på Saaben
         for (Vehicle saab : cars) {
-            if (saab.getClass() == Saab95.class){
+            if (saab.getClass() == Saab95.class) {
                 ((Saab95) saab).setTurboOn();
             }
         }
     }
-    void turboOff(){
+
+    void turboOff() {
         //Stäng av turbon på Saaben
         for (Vehicle saab : cars) {
-            if (saab.getClass() == Saab95.class){
+            if (saab.getClass() == Saab95.class) {
                 ((Saab95) saab).setTurboOff();
             }
         }
     }
-    void liftBed(){
+
+    void liftBed() {
         //Res flaket
         for (Vehicle car : cars) {
-            if (car.getClass()==Scania.class){
+            if (car.getClass() == Scania.class) {
                 ((Scania) car).raiseRamp(70);
                 System.out.println(((Scania) car).getTruckBedIncline());
             }
         }
     }
-    void lowerBed(){
+
+    void lowerBed() {
         //Fäll flaket
         for (Vehicle car : cars) {
-            if (car.getClass()==Scania.class){
+            if (car.getClass() == Scania.class) {
                 ((Scania) car).lowerRamp(70);
 
                 System.out.println(((Scania) car).getTruckBedIncline());
             }
         }
     }
-    void startAll(){
+
+    void startAll() {
         //Starta alla engines
         for (Vehicle car : cars
         ) {
             car.startEngine();
         }
     }
-    void stopAll(){
+
+    void stopAll() {
         //Stoppa alla engines
         for (Vehicle car : cars
         ) {
             car.stopEngine();
         }
     }
-    void addCar(){
+
+    void addCar() {
         if (cars.size() < 10) {
-            cars.add(VehicleFactory.createVolvo240("hej"));
+            if (cars.isEmpty()) {
+                cars.add(VehicleFactory.createSaab95("SAB" + Math.random()));
+            }
+            else if (!cars.isEmpty()){
+                int height = (int) cars.getLast().getPosition().getY();
+                if (cars.getLast().getClass() == Volvo240.class) {
+                    cars.add(VehicleFactory.createSaab95("SAB" + Math.random()));
+                } else if (cars.getLast().getClass() == Saab95.class) {
+                    cars.add(VehicleFactory.createScania("SCA" + Math.random()));
+                } else if (cars.getLast().getClass() == Scania.class) {
+                    cars.add(VehicleFactory.createVolvo240("VVO" + Math.random()));
+                }
+                cars.getLast().getPosition().move(0, height + 60);
+            }
+            cars.getLast().moveRight();
+
             timerListener.notifyCarAdd();
         }
-
-
-        //TODO: Add Car
-        //"Add car" ska antingen generera en slumpmässig bil eller en given bil.
-        //om det finns 10 bilar ska "Add car" inte ha någon effekt.
     }
+
+
 
     void removeCar(){
         if (!cars.isEmpty()) {
             cars.removeLast();
             timerListener.notifyCarRemove();
         }
-
-
-        //TODO: Remove Car uppdatera bilden
-
     }
 
     public class TimerListener implements ActionListener {
@@ -156,7 +177,7 @@ public class CarModel {
 
         public void notifyCarAdd(){
             for (Observer observer : observers) {
-                observer.notifyCarAdd();
+                observer.notifyCarAdd(cars.getLast().getModelName(), cars.getLast().getRegistrationNr());
             }
         }
 

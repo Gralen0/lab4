@@ -76,8 +76,12 @@ public class DrawPanel extends JPanel implements Observer{
     }
 
     @Override
-    public void notifyCarAdd(){
-        //TODO Add car with correct picture and name
+    public void notifyCarAdd(String modelName, String registrationNumber){
+        try {
+            carsToDraw.add(new carDraw( registrationNumber,ImageIO.read(DrawPanel.class.getResourceAsStream("pics/"+modelName+".jpg")),new Point()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
