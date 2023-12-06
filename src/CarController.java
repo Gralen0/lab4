@@ -12,17 +12,14 @@ import java.util.ArrayList;
  */
 
 public class CarController {
-    // member fields:
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
 
     CarModel model;
 
-    //methods:
 
     public CarController(){
-        //TODO: Fundera på att flytta skapandet av view till Applikationen
         this.frame = new CarView("CarSim 1.0");
 
         model = new CarModel(frame.drawPanel.getFrameBoundaryX());
@@ -96,8 +93,6 @@ public class CarController {
             }
         });
 
-        // Start the timer
-        model.timer.start();
     }
 
 

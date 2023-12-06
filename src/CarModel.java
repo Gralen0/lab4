@@ -22,7 +22,6 @@ public class CarModel {
     private int frameBoundaryX;
 
 
-    //TODO Fråga: frameBoundaryX som en parameter i konstruktorn?
     protected CarModel(int frameBoundaryX) {
         this.frameBoundaryX = frameBoundaryX;
         createCarList();
@@ -31,17 +30,9 @@ public class CarModel {
     }
 
     private void createCarList() {
-        /*addCar();
-        addCar();
-        addCar();*/
-        cars.add(VehicleFactory.createVolvo240("VVO240"));
-        cars.getLast().moveRight();
-        cars.add(VehicleFactory.createSaab95("SAB095"));
-        cars.getLast().moveRight();
-        cars.getLast().getPosition().move(0, 60);
-        cars.add(VehicleFactory.createScania("SCA180"));
-        cars.getLast().moveRight();
-        cars.getLast().getPosition().move(0, 120);
+        //addCar();
+        //addCar();
+        //addCar();
     }
 
 
@@ -125,11 +116,11 @@ public class CarModel {
             else if (!cars.isEmpty()){
                 int height = (int) cars.getLast().getPosition().getY();
                 if (cars.getLast().getClass() == Volvo240.class) {
-                    cars.add(VehicleFactory.createSaab95("SAB" + Math.random()));
+                    cars.add(VehicleFactory.createSaab95("SAAB" + Math.random()));
                 } else if (cars.getLast().getClass() == Saab95.class) {
-                    cars.add(VehicleFactory.createScania("SCA" + Math.random()));
+                    cars.add(VehicleFactory.createScania("SCANIA" + Math.random()));
                 } else if (cars.getLast().getClass() == Scania.class) {
-                    cars.add(VehicleFactory.createVolvo240("VVO" + Math.random()));
+                    cars.add(VehicleFactory.createVolvo240("VOLVO" + Math.random()));
                 }
                 cars.getLast().getPosition().move(0, height + 60);
             }

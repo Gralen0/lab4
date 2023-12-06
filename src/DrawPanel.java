@@ -14,6 +14,7 @@ public class DrawPanel extends JPanel implements Observer{
 
     private ArrayList<carDraw> carsToDraw;
     private int frameBoundaryX;
+    private int imageWidth = 100;
 
     @Override
     public void moveIt(String carName, int x, int y){
@@ -30,28 +31,7 @@ public class DrawPanel extends JPanel implements Observer{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-
-
-        // Print an error message in case file is not found with a try/catch block
-        try {
-            // You can remove the "pics" part if running outside of IntelliJ and
-            // everything is in the same main folder.
-            // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
-
-            // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
-            // if you are starting in IntelliJ.
-            //TODO Factory pattern?
-            carsToDraw= new ArrayList<>();
-            carsToDraw.add(new carDraw( "VVO240",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")),new Point()));
-            carsToDraw.add(new carDraw("SAB095",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")),new Point()));
-            carsToDraw.add(new carDraw("SCA180",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")),new Point()));
-
-            this.frameBoundaryX = x - carsToDraw.getFirst().image.getWidth();
-
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+        this.frameBoundaryX = x - imageWidth;
 
     }
 
