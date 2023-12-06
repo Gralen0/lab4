@@ -12,7 +12,6 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel implements Observer{
 
-    // To keep track of a singel cars position
     private ArrayList<carDraw> carsToDraw;
     private int frameBoundaryX;
 
@@ -84,6 +83,5 @@ public class DrawPanel extends JPanel implements Observer{
     @Override
     public void notifyCarRemove(){
         carsToDraw.removeLast();
-        //TODO Remove car
     }
 }
