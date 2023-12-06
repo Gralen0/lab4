@@ -1,49 +1,37 @@
-import org.w3c.dom.ranges.Range;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
-public class DrawPanel extends JPanel {
-    private HashMap<String, BufferedImage> carImages = new HashMap();
-    private HashMap<String, Point> carPositions;
-    private int frameSizeX;
-    private final int imageSizeX = 100;
+// This panel represent the animated part of the view with the car images.
 
-    public void setPositionHashMap(HashMap hmPos){
+public class DrawPanel extends JPanel{
 
-        this.carPositions = new HashMap<>(hmPos);
-        //this.carPositions = hmPos;
+    // Just a single image, TODO: Generalize
+    //BufferedImage volvoImage;
 
-    }
+    // To keep track of a singel cars position
+    private ArrayList<carDraw> carsToDraw;
+    private int frameBoundaryX;
 
-    public void setFrameSizeX(int x){
-        this.frameSizeX = x;
-    }
 
-    public int getFrameEdgeX(){
-        int edgeX = frameSizeX-imageSizeX;
-        return edgeX;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        for (String key : carImages.keySet()){
-
-            g.drawImage(carImages.get(key), carPositions.get(key).x, carPositions.get(key).y, null);
-
+    // TODO: Make this genereal for all cars
+    void moveit(String carName, int x, int y){
+        for (carDraw carToCheckName: carsToDraw){
+            if (carToCheckName.name.equals(carName)){
+                carToCheckName.point.x=x;
+                carToCheckName.point.y=y;
+            }
         }
-
     }
 
-
+    // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
-        System.out.println("Konstruktor");
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
@@ -55,21 +43,33 @@ public class DrawPanel extends JPanel {
             // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
 
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
-            // if you are starting in IntelliJ
-            //ArrayList<BufferedImage> carsDraw = new ArrayList<>();
-            carImages.put("Volvo240", ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
-            carImages.put("Saab95", ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
-            carImages.put("Scania", ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
+            // if you are starting in IntelliJ.
+            //TODO Factory pattern?
+            carsToDraw= new ArrayList<>();
+            carsToDraw.add(new carDraw( "VVO240",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")),new Point()));
+            carsToDraw.add(new carDraw("SAB095",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")),new Point()));
+            carsToDraw.add(new carDraw("SCA180",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")),new Point()));
 
-            /*carsToDraw= new ArrayList<>();
-            carsToDraw.add(new carDraw( "Yo", ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")),new Point()));
-            carsToDraw.add(new carDraw("Tja",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")),new Point()));
-            carsToDraw.add(new carDraw("Hej",ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")),new Point()));*/
+            this.frameBoundaryX = x - carsToDraw.getFirst().image.getWidth();
 
-
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
         }
 
+    }
+
+    public int getFrameBoundaryX() {
+        return frameBoundaryX;
+    }
+
+    // This method is called each time the panel updates/refreshes/repaints itself
+    // TODO: Change to suit your needs.
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (carDraw car : carsToDraw){
+            g.drawImage(car.image, car.point.x, car.point.y, null); // see javadoc for more info on the parameters
+        }
     }
 }

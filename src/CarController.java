@@ -1,13 +1,9 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.Position;
-import java.awt.*;
-import java.util.HashMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -24,30 +20,19 @@ public class CarController {
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
 
-    CarModel model = new CarModel();
-
-    // The frame that represents this instance View of the MVC
-    // Start a new view and send a reference of self
+    // The frame that represents this instance View of the MVC pattern
     CarView frame;
-    //DrawPanel drawPanelComposition;
-    int frameMinEdgeX = 0;
-    HashMap<String, Point> carPositions;
 
+    CarModel model;
+
+    int frameMinBoundaryX = 0;
+
+    //methods:
 
     public CarController(){
         this.frame = new CarView("CarSim 1.0");
 
-        carPositions = new HashMap<>();
-        //TODO: Fråga om Vehicle som typ
-        for (Vehicle car : model.getCars()){
-
-            carPositions.put(car.getModelName(), car.getPosition());
-
-        }
-
-        //Sätter Frame storleken i DrawPanel
-        //drawPanelComposition.setFrameSizeX(frame.getFrameSizeX());
-        frame.drawPanel.setFrameSizeX(frame.getFrameSizeX());
+        model = new CarModel();
 
         frame.gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -94,67 +79,66 @@ public class CarController {
         frame.startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.start();
+                model.startAll();
             }
         });
         frame.stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.stop();
+                model.stopAll();
             }
         });
-
     }
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
+
+        // Start a new view and send a reference of self
 
 
         // Start the timer
         cc.timer.start();
     }
 
-
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
+
+    //TODO Flytta till model??
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            //TODO Ta bort Vehicle?
             for (Vehicle car : model.getCars()) {
-
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
-                if (x+(int)Math.round(car.getCurrentSpeed()) > frame.drawPanel.getFrameEdgeX() && car.getDirection().equals("East")){
-                    car.getPosition().move(frame.drawPanel.getFrameEdgeX(),(int)car.getPosition().getY());
-                    car.stopEngine();
-                    car.moveRight();
-                    car.moveRight();
-                    car.startEngine();
+                int x = (int) Math.round(model.getPosition(car).getX());
+                int y = (int) Math.round(model.getPosition(car).getY());
+                if (x+(int)Math.round(model.getCurrentSpeed(car)) > frame.drawPanel.getFrameBoundaryX() && model.getDirection(car).equals("East")){
+                    model.getPosition(car).move(frame.drawPanel.getFrameBoundaryX(),(int)model.getPosition(car).getY());
+                    model.stopEngine(car);
+                    model.moveRight(car);
+                    model.moveRight(car);
+                    model.startEngine(car);
                 }
 
-                else if (x-(int)Math.round(car.getCurrentSpeed()) < frameMinEdgeX && car.getDirection().equals("West")){
-                    car.getPosition().move(frameMinEdgeX,(int)car.getPosition().getY());
-                    car.stopEngine();
-                    car.moveRight();
-                    car.moveRight();
-                    car.startEngine();
+                else if (x-(int)Math.round(model.getCurrentSpeed(car)) < frameMinBoundaryX && model.getDirection(car).equals("West")){
+                    model.getPosition(car).move(frameMinBoundaryX,(int)model.getPosition(car).getY());
+                    model.stopEngine(car);
+                    model.moveRight(car);
+                    model.moveRight(car);
+                    model.startEngine(car);
                 }
                 else {
-                    model.moveit(car,x, y);
-                }
 
+                model.move(car);
+                }
+                //TODO Är Vehicle car som argument problem?
+                frame.drawPanel.moveit(model.getRegistrationNr(car),x, y);
                 // repaint() calls the paintComponent method of the panel
 
-                //Uppdatera Hashmap sen skicka
-                carPositions.put(car.getModelName(),car.getPosition());
-                frame.drawPanel.setPositionHashMap(carPositions);
-
-
-                frame.drawPanel.repaint();
+                 frame.drawPanel.repaint();
             }
         }
     }
 
-
+    //TODO FIX STOP AND START CAR (BREAK)
 
 }

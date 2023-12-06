@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class CarModel {
@@ -19,15 +20,8 @@ public class CarModel {
         cars.getLast().getPosition().move(0,400);
     }
 
-    public void moveit(Vehicle car, int x, int y){
-        //String name=car.getRegistrationNr();
 
-            car.getPosition().move(x,y);
-
-        }
-
-
-        // Calls the gas method for each car once
+    // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle car : cars
@@ -77,18 +71,50 @@ public class CarModel {
             }
         }
     }
-    void start(){
+    void startAll(){
         //Starta alla engines
         for (Vehicle car : cars
         ) {
             car.startEngine();
         }
     }
-    void stop(){
+    void stopAll(){
         //Stoppa alla engines
         for (Vehicle car : cars
         ) {
             car.stopEngine();
         }
+    }
+
+    void stopEngine(Vehicle car){
+        car.stopEngine();
+    }
+    void startEngine(Vehicle car){
+        car.startEngine();
+    }
+
+    void moveRight(Vehicle car){
+        car.moveRight();
+    }
+
+    public Point getPosition(Vehicle car){
+        return car.getPosition();
+    }
+
+    public double getCurrentSpeed(Vehicle car){
+        return car.getCurrentSpeed();
+    }
+
+    public String getDirection(Vehicle car){
+        return  car.getDirection();
+
+    }
+
+    public String getRegistrationNr(Vehicle car){
+        return car.getRegistrationNr();
+    }
+
+    void move(Vehicle car){
+        car.move();
     }
 }
