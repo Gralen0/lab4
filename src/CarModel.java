@@ -115,6 +115,7 @@ public class CarModel {
             observers.add(observer);
         }
 
+        //TODO: remove??
         public void removeObserver(Observer observer) {
             observers.remove(observer);
         }
@@ -130,6 +131,18 @@ public class CarModel {
                 observer.moveIt(carName, x, y);
             }
 
+        }
+
+        public void notifyCarAdd(){
+            for (Observer observer : observers) {
+                observer.notifyCarAdd();
+            }
+        }
+
+        public void notifyCarRemove(){
+            for (Observer observer : observers) {
+                observer.notifyCarRemove();
+            }
         }
 
         int frameMinBoundaryX = 0;
@@ -155,13 +168,8 @@ public class CarModel {
                 else {
                     car.move();
                 }
-                //TODO Gör notifier?
-                //frame.drawPanel.moveit(car.getRegistrationNr(),x, y);
                 moveItNotify(car.getRegistrationNr(),x, y);
 
-                // repaint() calls the paintComponent method of the panel
-
-                //frame.drawPanel.repaint();
                 notifyObservers();
             }
         }

@@ -16,8 +16,6 @@ public class DrawPanel extends JPanel implements Observer{
     private ArrayList<carDraw> carsToDraw;
     private int frameBoundaryX;
 
-
-    // TODO: Make this genereal for all cars
     @Override
     public void moveIt(String carName, int x, int y){
         for (carDraw carToCheckName: carsToDraw){
