@@ -22,6 +22,7 @@ public class CarController {
     //methods:
 
     public CarController(){
+        //TODO: Fundera på att flytta skapandet av view till Applikationen
         this.frame = new CarView("CarSim 1.0");
 
         model = new CarModel(frame.drawPanel.getFrameBoundaryX());
