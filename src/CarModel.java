@@ -25,14 +25,9 @@ public class CarModel {
     protected CarModel(int frameBoundaryX) {
         this.frameBoundaryX = frameBoundaryX;
         timer = new Timer(delay, timerListener);
-        //createCarList();
+
     }
 
-    private void createCarList() {
-        //addCar();
-        //addCar();
-        //addCar();
-    }
 
 
     // Calls the gas method for each car once
@@ -92,7 +87,10 @@ public class CarModel {
         //Starta alla engines
         for (Vehicle car : cars
         ) {
-            car.startEngine();
+            if((car.getCurrentSpeed()==0)){
+                car.startEngine();
+            }
+
         }
     }
 
